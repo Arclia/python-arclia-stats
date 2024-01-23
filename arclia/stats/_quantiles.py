@@ -6,6 +6,24 @@ import numpy as np
 import numpy.typing as npt
 
 
+@overload
+def calculate_weighted_quantiles(
+    values: npt.ArrayLike,
+    weights: npt.ArrayLike,
+    q: Number,
+)-> Number:
+    ...
+
+
+@overload
+def calculate_weighted_quantiles(
+    values: npt.ArrayLike,
+    weights: npt.ArrayLike,
+    q: npt.ArrayLike,
+)-> np.ndarray:
+    ...
+
+
 def calculate_weighted_quantiles(
     values: npt.ArrayLike,
     weights: npt.ArrayLike,
@@ -51,9 +69,9 @@ def _calculate_weighted_quantiles(
     target_cumulative_weights = q * total_weight
 
     target_indices = np.searchsorted(
-        a = cumulative_weights,
+        a = cumulative_weights[:-1],
         v = target_cumulative_weights,
+        side = "right",
     )
 
     return sorted_values[target_indices]
-
