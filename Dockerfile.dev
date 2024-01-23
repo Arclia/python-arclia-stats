@@ -1,0 +1,28 @@
+FROM python:3.12
+
+WORKDIR /usr/src/app
+
+# Install Poetry for all users
+ENV POETRY_HOME=/opt/poetry
+ENV PATH="$POETRY_HOME/bin:$PATH"
+RUN curl -sSL https://install.python-poetry.org | python3 -
+
+
+# Install Dependencies globally
+COPY \
+  pyproject.toml \
+  poetry.lock \
+  /usr/src/app/
+RUN \
+  poetry config virtualenvs.create false && \
+  poetry install --no-root
+
+
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
+RUN groupadd --gid $GROUP_ID arclia && \
+    useradd --uid $USER_ID --gid $GROUP_ID --shell /bin/bash --create-home arclia
+
+
+USER arclia
