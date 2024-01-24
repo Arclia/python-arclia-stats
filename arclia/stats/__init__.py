@@ -1,2 +1,2 @@
 
-from ._quantiles import calculate_weighted_quantiles
+from ._quantiles import calculate_weighted_quantile

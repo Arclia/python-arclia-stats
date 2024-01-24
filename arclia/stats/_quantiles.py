@@ -7,7 +7,7 @@ import numpy.typing as npt
 
 
 @overload
-def calculate_weighted_quantiles(
+def calculate_weighted_quantile(
     values: npt.ArrayLike,
     weights: npt.ArrayLike,
     q: Number,
@@ -16,7 +16,7 @@ def calculate_weighted_quantiles(
 
 
 @overload
-def calculate_weighted_quantiles(
+def calculate_weighted_quantile(
     values: npt.ArrayLike,
     weights: npt.ArrayLike,
     q: npt.ArrayLike,
@@ -24,7 +24,7 @@ def calculate_weighted_quantiles(
     ...
 
 
-def calculate_weighted_quantiles(
+def calculate_weighted_quantile(
     values: npt.ArrayLike,
     weights: npt.ArrayLike,
     q: npt.ArrayLike,
@@ -34,7 +34,7 @@ def calculate_weighted_quantiles(
         else (np.asarray(q), False)
     )
 
-    result = _calculate_weighted_quantiles(
+    result = _calculate_weighted_quantile(
         values = np.asarray(values),
         weights = np.asarray(weights),
         q = qq,
@@ -48,7 +48,7 @@ def calculate_weighted_quantiles(
 
 
 
-def _calculate_weighted_quantiles(
+def _calculate_weighted_quantile(
     values: np.ndarray,
     weights: np.ndarray,
     q: np.ndarray,
