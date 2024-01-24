@@ -19,5 +19,7 @@ docker run \
   -it \
   --rm \
   --mount "type=bind,source=$(pwd),target=/usr/src/app" \
+  --env TWINE_USERNAME \
+  --env TWINE_PASSWORD \
   "$@" \
   "$IMAGE_NAME" bash
