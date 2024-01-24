@@ -53,11 +53,23 @@ def _calculate_weighted_quantiles(
     weights: np.ndarray,
     q: np.ndarray,
 ):
+    if np.any(q < 0) or np.any(q > 1):
+        raise ValueError("All `q` must be within the interval `[0, 1]`")
+
     if values.shape != weights.shape:
-        raise ValueError("values and weights must have the same shape")
-    
+        raise ValueError("`values` and `weights` must have the same shape")
+
+    # TODO: Perhaps we should allow for N > 0 dimensions
     if len(values.shape) != 1:
-        raise ValueError("values and weights must be 1-Dimensional Arrays")
+        raise ValueError("`values` and `weights` must be 1-Dimensional Arrays")
+
+    # TODO: This will need to be revisited if we allow N-Dimensional Arrays
+    if len(values) == 0:
+        raise ValueError("`values` and `weights` cannot be empty")
+
+    if np.any(weights < 0):
+        raise ValueError("All `weights` must be non-negative")
+
 
     sort_order = np.argsort(values)
     sorted_values = values[sort_order]
